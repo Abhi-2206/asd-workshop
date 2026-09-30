@@ -1,10 +1,25 @@
 let cache = {}
 
 function checkCache(key){
-    return cache[key]
+    let value = cache[key]
+
+    if(!value){
+        return
+    }
+
+    let age = Date.now()-value.createdAt
+
+    if (age>60*1000){
+        delete cache[key]
+        return
+    }
+
+    return value.data
 }
 function saveCache(key,data){
-    cache[key] = data;
+    cache[key] = {data:data,
+        createdAt: Date.now()
+    };
 }
 
 function cacheMiddleware(req,res,next){
