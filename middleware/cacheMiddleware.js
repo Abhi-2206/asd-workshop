@@ -14,8 +14,11 @@ function cacheMiddleware(req,res,next){
 
     if(value){
         console.log('cache worked')
+        res.set("X-Cache","HIT")
         return res.json(value)
     }
+
+    res.set("X-Cache","MISS")
     next()
 }
 
