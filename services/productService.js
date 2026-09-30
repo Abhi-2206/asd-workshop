@@ -1,4 +1,4 @@
-const { readData } = require("../database/productDatabase");
+const { readData,writeData } = require("../database/productDatabase");
 
 async function delay() {
   await new Promise((resolve, reject) => {
@@ -18,7 +18,17 @@ async function getProductsById(id) {
   return data.find((x) => x.id === id);
 }
 
+async function createProduct(product){
+    let data = await readData()
+    data.push(product)
+    
+    await writeData(data)
+
+    return product;
+}
+
 module.exports = {
   getProducts,
   getProductsById,
+  createProduct
 };

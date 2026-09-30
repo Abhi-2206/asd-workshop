@@ -22,6 +22,10 @@ function saveCache(key,data){
     };
 }
 
+function clearCache(){
+    cache = {}
+}
+
 function cacheMiddleware(req,res,next){
 
     let key = req.url
@@ -37,4 +41,4 @@ function cacheMiddleware(req,res,next){
     next()
 }
 
-module.exports = {cacheMiddleware,saveCache}
+module.exports = {cacheMiddleware,saveCache,clearCache}

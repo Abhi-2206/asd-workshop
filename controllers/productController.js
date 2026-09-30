@@ -1,5 +1,5 @@
-const {getProducts,getProductsById} = require('../services/productService')
-const {saveCache} = require('../middleware/cacheMiddleware')
+const {getProducts,getProductsById,createProduct} = require('../services/productService')
+const {saveCache,clearCache} = require('../middleware/cacheMiddleware')
 
 
 async function getAllProducts(req,res){
@@ -26,7 +26,22 @@ async function getSpecificProduct(req,res){
     }
 }
 
+
+async function postProduct(req,res){
+    try{
+        let product = req.body;
+
+        let data = await createProduct(product);
+
+        clearCache()
+        res.json(data)
+    }catch(err){
+        console.log(err)
+    }
+}
+
 module.exports = {
     getAllProducts,
-    getSpecificProduct
+    getSpecificProduct,
+    postProduct
 };
