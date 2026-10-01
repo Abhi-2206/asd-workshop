@@ -3,7 +3,8 @@ const {
     getProductsById,
     createProduct,
     updateProduct,
-    patchProduct
+    patchProduct,
+    deleteProduct
 } = require('../services/productService')
 const {saveCache,clearCache} = require('../middleware/cacheMiddleware')
 
@@ -88,6 +89,23 @@ async function patchProductController(req,res){
     }
 }
 
+async function deleteProductController(req,res){
+
+    try{
+        let id = Number(req.params.id)
+
+        let data = await deleteProduct(id)
+
+        if(!data){
+            return res.status(404).json({message:"Product not found"})
+
+        }
+        clearCache()
+        res.json(data)
+    }catch(err){
+        console.log(err);
+    }
+}
 
 
 module.exports = {
@@ -95,5 +113,6 @@ module.exports = {
     getSpecificProduct,
     postProduct,
     putProduct,
-    patchProductController
+    patchProductController,
+    deleteProductController
 };

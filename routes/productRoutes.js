@@ -5,7 +5,8 @@ const {
     getSpecificProduct,
     postProduct,
     putProduct,
-    patchProductController
+    patchProductController,
+    deleteProductController
     } = require('../controllers/productController')
 
 const {cacheMiddleware} = require('../middleware/cacheMiddleware')
@@ -23,4 +24,5 @@ router.put('/products/:id',putProduct)
 
 router.patch('/products/:id',patchProductController)
 
+router.delete('/products/:id',deleteProductController)
 module.exports = router;
