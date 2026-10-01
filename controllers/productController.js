@@ -1,4 +1,10 @@
-const {getProducts,getProductsById,createProduct,updateProduct} = require('../services/productService')
+const {
+    getProducts,
+    getProductsById,
+    createProduct,
+    updateProduct,
+    patchProduct
+} = require('../services/productService')
 const {saveCache,clearCache} = require('../middleware/cacheMiddleware')
 
 
@@ -60,9 +66,34 @@ async function putProduct(req,res){
     }
 }
 
+async function patchProductController(req,res){
+    try{
+        let id = Number(req.params.id);
+        let product = req.body;
+
+        let data = await patchProduct(id,product);
+
+
+        if(!data){
+            return res.status(404).json({message:"Product not found"});
+
+        }
+
+        clearCache();
+
+        res.json(data);
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
+
 module.exports = {
     getAllProducts,
     getSpecificProduct,
     postProduct,
-    putProduct
+    putProduct,
+    patchProductController
 };
