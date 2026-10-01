@@ -27,8 +27,24 @@ async function createProduct(product){
     return product;
 }
 
+async function updateProduct(id,product){
+  let data = await readData()
+
+  let index = data.findIndex((x)=> x.id === id);
+
+  if(index === -1){
+    return;
+  }
+
+  data[index] = product;
+
+  await writeData(data);
+  return product;
+}
+
 module.exports = {
   getProducts,
   getProductsById,
-  createProduct
+  createProduct,
+  updateProduct
 };
